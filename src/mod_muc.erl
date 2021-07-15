@@ -1386,11 +1386,10 @@ mod_doc() ->
                      "store room information. The default is the storage defined "
                      "by the global option 'default_db', or 'mnesia' if omitted.")}},
            {ram_db_type,
-            #{value => "mnesia",
+            #{value => "mnesia | sql",
               desc =>
                   ?T("Define the type of volatile (in-memory) storage where the module "
-                     "will store room information. The only available value for this "
-                     "module is 'mnesia'.")}},
+                     "will store room information ('muc_online_room' and 'muc_online_users').")}},
            {hibernation_timeout,
             #{value => "infinity | Seconds",
               desc =>
@@ -1442,12 +1441,14 @@ mod_doc() ->
                      "The default value is 'infinity'.")}},
            {max_password,
             #{value => ?T("Number"),
+              note => "added in 21.01",
               desc =>
                   ?T("This option defines the maximum number of characters "
                      "that Password can have when configuring the room. "
                      "The default value is 'infinity'.")}},
            {max_captcha_whitelist,
             #{value => ?T("Number"),
+              note => "added in 21.01",
               desc =>
                   ?T("This option defines the maximum number of characters "
                      "that Captcha Whitelist can have when configuring the room. "

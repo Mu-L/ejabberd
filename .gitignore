@@ -17,6 +17,7 @@
 /ebin/
 /ejabberd.init
 /ejabberd.service
+/ejabberdctl
 /ejabberdctl.example
 /rel/ejabberd/
 /src/eldap_filter_yecc.erl
@@ -25,6 +26,7 @@
 /test/*.beam
 /test/*.ctc
 /logs/
+/priv/bin/captcha*sh
 /priv/sql
 /rel/ejabberd
 /_build
@@ -32,3 +34,4 @@
 /.rebar
 /rebar.lock
 /log/
+Mnesia.nonode@nohost/

@@ -237,6 +237,7 @@ get_commands_spec() ->
 		        result = {rooms, {list, {room, string}}}},
      #ejabberd_commands{name = get_user_subscriptions, tags = [muc],
 			desc = "Get the list of rooms where this user is subscribed",
+			note = "added in 21.04",
 			module = ?MODULE, function = get_user_subscriptions,
 		        args_desc = ["Username", "Server host"],
 		        args_example = ["tom", "example.com"],
@@ -695,13 +696,24 @@ create_room_with_opts(Name1, Host1, ServerHost1, CustomRoomOpts) ->
 					       lists:keysort(1, DefRoomOpts)),
 		    case mod_muc:create_room(Host, Name, RoomOpts) of
 			ok ->
-			    ok;
+                            maybe_store_room(ServerHost, Host, Name, RoomOpts);
 			{error, _} ->
 			    throw({error, "Unable to start room"})
 		    end;
+		invalid_service ->
+		    throw({error, "Invalid 'service'"});
 		_ ->
 		    throw({error, "Room already exists"})
 	    end
+    end.
+
+maybe_store_room(ServerHost, Host, Name, RoomOpts) ->
+    case proplists:get_bool(persistent, RoomOpts) of
+        true ->
+            {atomic, ok} = mod_muc:store_room(ServerHost, Host, Name, RoomOpts),
+            ok;
+        false ->
+            ok
     end.
 
 %% Create the room only in the database.
