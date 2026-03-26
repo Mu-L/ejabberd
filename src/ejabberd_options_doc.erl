@@ -802,9 +802,13 @@ doc() ->
      {jwt_key,
       #{value => ?T("FilePath"),
         desc =>
-            ?T("Path to the file that contains the "
-               "_`authentication.md#jwt-authentication|JWT`_ key. "
-               "The default value is 'undefined'.")}},
+            [?T("Path to the file that contains the "
+                "_`authentication.md#jwt-authentication|JWT`_ key."), "",
+            ?T("Supported file formats:"), "",
+            ?T("* *PEM format* - Standard PEM-encoded keys (RSA, EC, EdDSA, etc.)"), "",
+            ?T("* *JWK (JSON Web Key)* - JSON format"), "",
+            ?T("* *JWK Set* - JSON with a `\"keys\"` array (but must contain exactly one key)"), "",
+            ?T("By default there is no path defined, that is: 'undefined'."), ""]}},
      {language,
       #{value => ?T("Language"),
         desc =>
