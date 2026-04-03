@@ -1079,6 +1079,8 @@ sqlite_connect(Host) ->
 	ok ->
 	    case sqlite3:open(sqlite_db(Host), [{file, File}]) of
 		{ok, Ref} ->
+                    ?INFO_MSG("Storing sqlite database for host ~s in file ~s",
+                                 [Host, File]),
 		    sqlite3:sql_exec(
 		      sqlite_db(Host), "pragma foreign_keys = on"),
 		    {ok, Ref};
