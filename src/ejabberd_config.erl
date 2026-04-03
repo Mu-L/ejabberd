@@ -514,12 +514,14 @@ get_predefined_keywords(Host) ->
     ConfigDirPath =
         iolist_to_binary(filename:dirname(
                              ejabberd_config:path())),
+    DatabasePath = iolist_to_binary(mnesia:system_info(directory)),
     LogDirPath =
         iolist_to_binary(filename:dirname(
                              ejabberd_logger:get_log_path())),
     HostList
     ++ [{<<"HOME">>, list_to_binary(Home)},
         {<<"CONFIG_PATH">>, ConfigDirPath},
+        {<<"DATABASE_PATH">>, DatabasePath},
         {<<"LOG_PATH">>, LogDirPath},
         {<<"SEMVER">>, ejabberd_option:version()},
         {<<"VERSION">>,
