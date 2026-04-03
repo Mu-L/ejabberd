@@ -1476,10 +1476,13 @@ doc() ->
             ?T("A time to wait for connection to an SQL server to be "
                "established. The default value is '5' seconds.")}},
      {sql_database,
-      #{value => ?T("Database"),
+      #{value => ?T("DatabaseName | PathSqliteFile"),
         desc =>
-            ?T("An SQL database name. For SQLite this must be a full "
-               "path to a database file. The default value is 'ejabberd'.")}},
+            ?T("An SQL database name, being the default value 'ejabberd'. "
+               "If option _`sql_type`_ is set to 'sqlite', "
+                "this must be a full path to a database file, "
+                "being the default value: '\"@DATABASE_PATH@/sqlite/@HOST@.sqlite\"")
+       }},
      {sql_keepalive_interval,
       #{value => "timeout()",
         desc =>
