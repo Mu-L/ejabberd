@@ -227,7 +227,7 @@ mod_options(Host) ->
      {access_subscribe, []},
      {access_publish, []},
      {db_type, ejabberd_config:default_db(Host, ?MODULE)},
-     {ram_db_type, ejabberd_config:default_ram_db(Host, ?MODULE)},
+     {ram_db_type, ejabberd_config:default_ram_db(Host, ?MODULE, {open_session, 1})},
      {queue_type, ejabberd_option:queue_type(Host)},
      {use_cache, ejabberd_option:use_cache(Host)},
      {cache_size, ejabberd_option:cache_size(Host)},
