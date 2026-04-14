@@ -70,9 +70,9 @@ sql_schemas() ->
                                       #sql_index{columns = [<<"type">>]},
                                       #sql_index{columns = [<<"account_name">>]},
                                       #sql_index{columns = [<<"invitee">>]}]}],
-                 update = [{create_index, <<"invite_token">>, [<<"type">>]},
-                           {create_index, <<"invite_token">>, [<<"account_name">>]}
-                          ]},
+                 update =
+                     [{create_index, <<"invite_token">>, [<<"type">>]},
+                      {create_index, <<"invite_token">>, [<<"account_name">>]}]},
      #sql_schema{version = 2,
                  tables =
                      [#sql_table{name = <<"invite_token">>,
@@ -179,7 +179,9 @@ get_invite(Host, Token) ->
 -spec get_invite_by_invitee_t(binary(), {binary(), binary()}) ->
                                  mod_invites:invite_token() | {error, not_found}.
 get_invite_by_invitee_t(Host, {User, Server}) ->
-    Invitee = jid:encode(jid:make(User, Server)),
+    Invitee =
+        jid:encode(
+            jid:make(User, Server)),
     case ejabberd_sql:sql_query(Host,
                                 ?SQL("SELECT @(token)s, @(username)s, @(invitee)s, @(type)s, "
                                      "@(account_name)s, @(expires)t, @(created_at)t FROM "

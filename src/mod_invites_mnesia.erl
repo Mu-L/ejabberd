@@ -71,17 +71,21 @@ get_invite(_Host, Token) ->
     end.
 
 get_invite_by_invitee_t(_Host, {User, Host}) ->
-    Invitee = jid:encode(jid:make(User, Host)),
+    Invitee =
+        jid:encode(
+            jid:make(User, Host)),
     Invites = mnesia:index_read(invite_token, Invitee, #invite_token.invitee),
-    case [I || I = #invite_token{type = Type, account_name = AccountName} <- Invites,
-               Type =/= roster_only orelse AccountName == User] of
+    case [I
+          || I = #invite_token{type = Type, account_name = AccountName} <- Invites,
+             Type =/= roster_only orelse AccountName == User]
+    of
         [Invite] ->
             Invite;
         [] ->
             %% It might be a roster_only invite was used to create account but invitee has not been
             %% set
             case mnesia:index_read(invite_token, User, #invite_token.account_name) of
-                [#invite_token{type = Type} = Invite] when Type == roster_only  ->
+                [#invite_token{type = Type} = Invite] when Type == roster_only ->
                     Invite;
                 _ ->
                     {error, not_found}

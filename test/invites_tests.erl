@@ -434,8 +434,7 @@ overuse(Config0) ->
     OldOpts = gen_mod:get_module_opts(Server, mod_invites),
     NewOpts =
         gen_mod_set_opts(OldOpts,
-                         [{access_create_account, account_invite},
-                          {allow_modules, [mod_invites]}]),
+                         [{access_create_account, account_invite}, {allow_modules, [mod_invites]}]),
     update_module_opts(Server, mod_invites, NewOpts),
 
     Config1 = reconnect(Config0),
@@ -443,11 +442,11 @@ overuse(Config0) ->
 
     %% We only test we're not causing any crashes - these are test from reported bugs. We're not
     %% testing the actual overuse scenario.
-
     #invite_token{token = AToken} = create_account_invite(Server, {<<>>, Server}),
     mod_invites:set_invitee(Server, AToken, InviteeJID),
 
-    #invite_token{token = RToken} = mod_invites:create_roster_invite(Server, {<<"foo">>, Server}),
+    #invite_token{token = RToken} =
+        mod_invites:create_roster_invite(Server, {<<"foo">>, Server}),
     mod_invites:set_invitee(Server, RToken, InviteeJID),
 
     #invite_token{} = create_account_invite(Server, Inviter),
@@ -456,7 +455,8 @@ overuse(Config0) ->
     ?match(1, mod_invites:cleanup_expired()),
     mod_invites:remove_user(User, Server),
 
-    #invite_token{token = RToken2} = mod_invites:create_roster_invite(Server, {<<"foo">>, Server}),
+    #invite_token{token = RToken2} =
+        mod_invites:create_roster_invite(Server, {<<"foo">>, Server}),
 
     ?match(#iq{type = result}, send_pars(Config1, RToken2)),
     ?match(#iq{type = result}, send_iq_register(Config1, <<"overuser">>)),
@@ -466,12 +466,12 @@ overuse(Config0) ->
                                        <<"mySecret">>,
                                        set_opt(user, <<"overuser">>, Config1))))),
 
-    #invite_token{token = RToken3} = mod_invites:create_roster_invite(Server, {<<"foo">>, Server}),
+    #invite_token{token = RToken3} =
+        mod_invites:create_roster_invite(Server, {<<"foo">>, Server}),
     mod_invites:set_invitee(Server, RToken3, jid:make(<<"overuser">>, Server)),
 
     #invite_token{} = create_account_invite(Server, {<<"overuser">>, Server}),
     ejabberd_auth:remove_user(<<"overuser">>, Server).
-
 
 presence_with_preauth_token(Config) ->
     Server = ?config(server, Config),
