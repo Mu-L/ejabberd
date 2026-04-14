@@ -313,6 +313,7 @@ get_commands_spec() ->
 			longdesc = "This command can be run from any running "
 			"node of the cluster, even the node to be removed.",
 			module = ?MODULE, function = leave_cluster,
+			note = "improved in 26.04",
 			args_desc = ["Nodename of the node to kick from the cluster"],
 			args_example = [<<"ejabberd1@machine8">>],
 			args = [{node, binary}],

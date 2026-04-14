@@ -1477,6 +1477,7 @@ doc() ->
                "established. The default value is '5' seconds.")}},
      {sql_database,
       #{value => ?T("DatabaseName | PathSqliteFile"),
+        note => "improved in 26.04",
         desc =>
             ?T("An SQL database name, being the default value 'ejabberd'. "
                "If option _`sql_type`_ is set to 'sqlite', "
